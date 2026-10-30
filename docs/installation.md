@@ -10,7 +10,6 @@ ChakChak runs locally and uses an agent CLI that you install and sign in to sepa
 |---|---|---|
 | macOS app, Apple silicon | macOS 12 or later, Apple M-series Mac | `ChakChak-<version>-macos-arm64.zip` |
 | macOS app, Intel | macOS 12 or later, Intel Mac | `ChakChak-<version>-macos-amd64.zip` |
-| Linux binary/archive | Linux amd64 or arm64; packaged binary must stay within the glibc 2.34 floor | Ready-made Linux archives are not currently published |
 | Windows | — | No supported build or release path |
 
 The macOS downloads are separate apps, not a universal binary. The [release repository](https://github.com/arkuramshin/ccr/releases) is the default download and update source; custom builds can name another repository or disable update checks. Choose your architecture's archive on the [latest release page](https://github.com/arkuramshin/ccr/releases/latest). GitHub's automatic **Source code** archives contain this documentation repository, not the application.
@@ -30,11 +29,11 @@ shasum -a 256 -c SHA256SUMS
 
 The executable is `ChakChak.app/Contents/MacOS/chakchak`. OpenSpec and `THIRD_PARTY_NOTICES.md` are in `Contents/Resources/`. The app uses the bundled OpenSpec regardless of another `openspec` on `PATH`.
 
-Signed release apps are checked by macOS. Archives with `-unsigned` in the name are local/ad-hoc packages and are not equivalent to the signed, notarized release. See [startup troubleshooting](troubleshooting.md#the-app-does-not-start) if the system refuses the app.
+Release apps are signed and notarized, and macOS checks them. See [startup troubleshooting](troubleshooting.md#the-app-does-not-start) if the system refuses the app.
 
 ## Enable the terminal command
 
-On launch from the macOS app bundle, ChakChak attempts to create a `chakchak` symlink to its executable. It tries writable `/usr/local/bin` first and `~/.local/bin` next; Linux prefers `~/.local/bin`. Settings → **Terminal command** shows the path and offers to create the link if the initial attempt could not.
+On launch from the macOS app bundle, ChakChak attempts to create a `chakchak` symlink to its executable. It tries writable `/usr/local/bin` first and `~/.local/bin` next. Settings → **Terminal command** shows the path and offers to create the link if the initial attempt could not.
 
 A symlink pointing to an older copy can be updated. An ordinary file named `chakchak` is preserved, so inspect an existing installation before replacing it. The settings panel also provides a command for an administrator-managed `/usr/local/bin` link.
 
@@ -52,27 +51,6 @@ chakchak version
 ```
 
 The version includes the release and source commit, for example `chakchak <version> (<commit>)`; a working-tree build can have a `-dirty` suffix. The app's settings show the same identity. `version`, `help` and `skill` do not create a home directory or journal.
-
-## Linux installation from a built archive
-
-Ready-made releases are currently available for macOS only. If a build distributor has supplied you with a Linux archive, use the steps below. Application sources are not in this repository; its **Source code** archive cannot be used to build the app.
-
-A Linux package contains one directory with `chakchak`, `THIRD_PARTY_NOTICES.md`, `chakchak.desktop` and `chakchak.png`. The binary includes OpenSpec. The package checks a glibc 2.34 ceiling for required symbols; musl-only distributions are not the packaging target.
-
-For an archive and matching manifest, substitute the actual version and architecture:
-
-```sh
-sha256sum -c --ignore-missing SHA256SUMS
-tar -xzf chakchak-<version>-linux-amd64.tar.gz
-cd chakchak-<version>-linux-amd64
-mkdir -p "$HOME/.local/bin"
-install -m 0755 chakchak "$HOME/.local/bin/chakchak"
-install -Dm 0644 chakchak.desktop "$HOME/.local/share/applications/chakchak.desktop"
-install -Dm 0644 chakchak.png "$HOME/.local/share/icons/hicolor/256x256/apps/chakchak.png"
-chakchak version
-```
-
-Keep the notices with the distribution. The desktop entry runs `chakchak app`, so the desktop environment must find `chakchak` on `PATH`; a shell-only path change may not affect an existing desktop session. Running `chakchak app` from a terminal opens the local browser interface.
 
 ## First working launch
 
@@ -116,9 +94,9 @@ Old installations can import settings and history from earlier config/cache layo
 
 A release with an update repository checks GitHub for a newer release at most daily during `app`; Settings also offers a manual check. Development builds and builds made with `RELEASES=` do not check. Network failures and rate limits do not stop repository work; failed transient requests have two retries, after 2 and 5 seconds.
 
-The **Update** action downloads the matching archive and `SHA256SUMS`, verifies the checksum and executable version, replaces the installed program/app, and restarts at the same local address. On macOS it also requires `codesign --verify --deep --strict` and the same signing Team ID as the running app. A failed bundle swap restores the old app. Linux replacement uses the checksum check without the macOS signing check.
+The **Update** action downloads the matching archive and `SHA256SUMS`, verifies the checksum and executable version, replaces the installed program/app, and restarts at the same local address. On macOS it also requires `codesign --verify --deep --strict` and the same signing Team ID as the running app. A failed bundle swap restores the old app.
 
-An update is refused while work runs, from a translocated macOS app, into an unwritable location, or when a matching archive or checksum manifest is missing. Move the app to Applications, stop/finish active work, and use an installation location you can update. A Linux build cannot update from a release that has no Linux asset. Inspect the refusal instead of replacing files during a running migration.
+An update is refused while work runs, from a translocated macOS app, into an unwritable location, or when a matching archive or checksum manifest is missing. Move the app to Applications, stop/finish active work, and use an installation location you can update. Inspect the refusal instead of replacing files during a running migration.
 
 ## About source builds
 

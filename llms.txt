@@ -1,6 +1,6 @@
 # ChakChak
 
-> ChakChak is a local app and CLI (macOS; Linux from source) that migrates an existing code repository to spec-driven development: it reads the code, discusses it with a person or an agent, and writes plain OpenSpec specs, one `openspec/specs/<capability>/spec.md` per capability. After the migration it keeps specs in step with the code and runs OpenSpec changes step by step. It uses the coding agent CLI already installed and signed in on the machine (Claude Code, Codex, Gemini CLI, Qwen Code, OpenCode, Cursor CLI, Copilot CLI and others); it holds no credentials of its own.
+> ChakChak is a local app and CLI (macOS, Apple silicon and Intel) that migrates an existing code repository to spec-driven development: it reads the code, discusses it with a person or an agent, and writes plain OpenSpec specs, one `openspec/specs/<capability>/spec.md` per capability. After the migration it keeps specs in step with the code and runs OpenSpec changes step by step. It uses the coding agent CLI already installed and signed in on the machine (Claude Code, Codex, Gemini CLI, Qwen Code, OpenCode, Cursor CLI, Copilot CLI and others); it holds no credentials of its own.
 
 This repository (`arkuramshin/ccr`) distributes the signed binaries only. Download: https://github.com/arkuramshin/ccr/releases/latest
 

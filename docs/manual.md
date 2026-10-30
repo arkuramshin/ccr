@@ -4,7 +4,7 @@
 
 ChakChak helps an existing code repository move to spec-driven development. It reads the implementation, agrees on the project's purpose with you, groups its files into capabilities, and writes ordinary OpenSpec specifications. You can then use the application to plan changes, review documents, run implementation tasks through your coding agent, and archive completed changes.
 
-This manual describes the application window and browser interface. Both use the same local ChakChak process and the same repository files. Builds with **Help → User manual** include this text offline in the application's interface language. If your installed version only has a quick guide, read the full manual here.
+This manual describes the application window and browser interface. Both use the same local ChakChak process and the same repository files. This is the same manual the app shows under **Help → Manual**, offline and in the interface language.
 
 ## Contents
 
@@ -52,7 +52,7 @@ Machine checks establish that declarations are accounted for and the specificati
 
 You need a local repository and an installed coding-agent CLI that is already signed in and can work from your terminal. ChakChak uses that program's account and model access. A release includes OpenSpec and its runtime; a development build may require `openspec` on `PATH`.
 
-The release workflow currently publishes packages for Apple silicon and Intel Macs. Move `ChakChak.app` into Applications before opening it. Linux is supported through source builds and local packaging; a downloadable Linux release is not currently promised. For a Linux installation, put the binary on `PATH`; the desktop launcher is optional. The provided Linux packaging targets glibc 2.34 or newer.
+The release workflow currently publishes packages for Apple silicon and Intel Macs. Move `ChakChak.app` into Applications before opening it.
 
 Prepare the repository before asking an agent to implement changes:
 
@@ -73,7 +73,7 @@ Open ChakChak normally, or run:
 chakchak app
 ```
 
-The packaged macOS application opens its own window. Linux and terminal launches normally open the local interface in your browser. If the browser does not open, use the local address printed by the command.
+The packaged macOS application opens its own window. Terminal launches normally open the local interface in your browser. If the browser does not open, use the local address printed by the command.
 
 The first screen contains repositories and the available agents. On **Repositories**, use **Choose folder**, where the platform offers a folder picker, or enter an absolute folder path under **Add repository** and press **Add**. A recent repository's **Open** button opens it directly; selecting its row shows its details first. **Forget** removes a remembered entry and leaves its folder on disk.
 
@@ -352,7 +352,7 @@ Open the gear to inspect **Settings**. Close it or press Escape to return.
 - **About / Updates:** application version, **Check**, release notes, and **Update** when offered. Development builds do not perform release updates.
 - **Terminal command:** the installed command or link and any shell `PATH` instructions needed to invoke `chakchak`.
 - **Open in browser:** opens the same local interface in the default browser where offered.
-- **Reset settings:** moves `settings.json` and custom `agents.json` aside as timestamped `.bak` files. Repository work, journals, and saved migrations remain. A restart may be needed to reload default agents.
+- **Reset settings:** moves `settings.json` and custom `agents.json` aside as `.bak-<timestamp>` files (`-2`, `-3` are added on a name collision). Repository work, journals, and saved migrations remain. A restart may be needed to reload default agents.
 
 The application has no autopilot switch. Autopilot is a terminal-run option; its presence in a saved run can explain automatic acceptance of clean review points.
 
@@ -368,7 +368,7 @@ Besides standard OpenSpec output, `openspec/chakchak/` stores `run.json`, `codem
 
 Local conversations, journals, stage snapshots, and states saved before a restore are kept there too, with ignore rules excluding local history from ordinary commits. Brief attachments and change-chat attachments are copied into ignored ChakChak folders. Ignore rules are not encryption or access control.
 
-Journals record model requests, answers, diagnostics, and timing. Launches retain the newest 20 journal folders and those modified in the last seven days. Conversations, snapshots, restore backups, and attachments do not have the same automatic age/count cleanup; review disk use when keeping long histories.
+Journals record model requests, answers, diagnostics, and timing. Launches retain the newest 20 journal folders and those modified in the last seven days; older ones are removed automatically. Conversations, snapshots, restore backups, and attachments do not have the same automatic age/count cleanup; review disk use when keeping long histories.
 
 ### What stays on this computer
 

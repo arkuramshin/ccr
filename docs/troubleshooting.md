@@ -20,9 +20,8 @@ Record the version/commit, OS and architecture, launch command, selected agent e
 
 | Symptom | Check and recovery |
 |---|---|
-| Wrong architecture or executable format | Use `macos-arm64` for Apple silicon and `macos-amd64` for Intel. Linux archives are separate executables. |
-| macOS refuses the app | Verify it came from the intended release and that its archive matches `SHA256SUMS`. A `-unsigned` package is ad-hoc, not notarized; obtain a signed release or build locally. Do not treat deleting quarantine as release verification. |
-| Linux reports a missing GLIBC version | Use a distribution compatible with the packaged glibc floor (2.34) or build for your system. The package is not a musl-native build. |
+| Wrong architecture or executable format | Use `macos-arm64` for Apple silicon and `macos-amd64` for Intel. |
+| macOS refuses the app | Verify it came from the intended release and that its archive matches `SHA256SUMS`. Releases are signed and notarized; an app that fails the check is not an official release. Do not treat deleting quarantine as release verification. |
 | Startup reports an unreadable home/settings/import path | Keep the named file and follow [saved-state recovery](#saved-state-or-settings-cannot-be-read). Close older processes before an import. |
 | Browser does not open | Use the loopback address printed by the process. Check whether another ChakChak owns the application/page or another program owns the port. Do not terminate an unidentified process. |
 
@@ -108,13 +107,13 @@ Close older ChakChak processes before the first working launch of a newer build.
 
 Preserve the named source and destination before repair. For malformed `~/.chakchak/settings.json`, restore a known-good backup or correct its JSON while ChakChak is closed; writes deliberately refuse to overwrite invalid existing bytes. Do not replace a damaged file with `{}` before keeping a copy. Unknown settings keys are preserved by the writer.
 
-Older caches can remain at `~/Library/Caches/chakchak/` on macOS or `~/.cache/chakchak/` on Linux. They are not the current runtime and are not automatically deleted, because they may contain incomplete imports or client-owned history. Repository histories previously under `~/.chakchak/projects/` move into the repository after it is durable. Repeatedly deleting the home/cache obscures evidence and does not repair a damaged repository checkpoint.
+Older caches can remain at `~/Library/Caches/chakchak/` on macOS. They are not the current runtime and are not automatically deleted, because they may contain incomplete imports or client-owned history. Repository histories previously under `~/.chakchak/projects/` move into the repository after it is durable. Repeatedly deleting the home/cache obscures evidence and does not repair a damaged repository checkpoint.
 
 ## Updating fails
 
 Finish active work, move a translocated Mac app into Applications, and check write permission on its parent directory. The updater refuses missing platform archives, missing/mismatched `SHA256SUMS`, a wrong executable version, invalid macOS signatures or a different Team ID. Use a matching signed distribution instead of bypassing the checks.
 
-Development builds may have automatic release checks disabled. Ready-made Linux archives are not currently published, so a Linux installation may correctly find no compatible update. Refresh a custom build according to its distributor's instructions. After a replacement, quit and reopen a still-running old copy.
+Development builds may have automatic release checks disabled. Refresh a custom build according to its distributor's instructions. After a replacement, quit and reopen a still-running old copy.
 
 ## Collect evidence without leaking secrets
 

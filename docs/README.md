@@ -9,7 +9,7 @@ ChakChak turns an existing repository into an OpenSpec workspace, then helps you
 | Guide | What you will find |
 | --- | --- |
 | [Installation and updates](installation.md) | Apple silicon and Intel Macs, the terminal command, first launch, updates and removal. |
-| [User manual](manual.md) | 20 chapters covering the interface, migration, specification review, changes, tasks, schemas, synchronization, archive and saved data. |
+| [User manual](manual.md) | Chapters covering the interface, migration, specification review, changes, tasks, schemas, synchronization, archive and saved data. |
 | [CLI, agents and MCP](integrations.md) | Built-in providers, commands and flags, custom integrations, skill registration and MCP control. |
 | [Troubleshooting](troubleshooting.md) | Startup, agent selection, interrupted work, validation refusals, recovery and diagnostics. |
 
@@ -23,8 +23,8 @@ ChakChak turns an existing repository into an OpenSpec workspace, then helps you
 
 ## Versions and in-app help
 
-Documentation updated on October 30, 2026, describing the current workflow. Settings and `chakchak version` identify your installed build; a packaged release can trail these guides.
+The documentation describes the current workflow. Settings and `chakchak version` identify your installed build; a packaged release can trail these guides.
 
-Builds with **Help → User manual** include the full text offline in the interface language. If your version only has a quick guide, use the manual published here.
+The manual is also available in the app under **Help → Manual**, offline and in the interface language.
 
 This repository contains documentation and application downloads. Reading these guides does not require access to the application source.
