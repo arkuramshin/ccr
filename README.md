@@ -2,6 +2,8 @@
 
 English | [Русский](README.ru.md)
 
+[Download](https://github.com/arkuramshin/ccr/releases/latest) · **[Documentation](docs/README.md)** · [User manual](docs/manual.md)
+
 - High-quality migration of code repositories to SDD
 - Real-time sync of code and spec.md
 - Easy builder for schema.yaml
@@ -9,6 +11,17 @@ English | [Русский](README.ru.md)
 - Clean, strictly controlled harness
 - ~~Vibecoding~~ Deepcoding
 - WEB, MCP or CLI mode, your choice
+
+## Documentation
+
+Detailed guides are available in [English](docs/README.md) and [Russian](docs/ru/README.md).
+
+| Guide | Contents |
+| --- | --- |
+| [Installation and updates](docs/installation.md) | Requirements, Mac installation, terminal command and updates. |
+| [User manual](docs/manual.md) | Migration, specifications, changes, tasks, schemas, synchronization and archive. |
+| [CLI, agents and MCP](docs/integrations.md) | Commands, provider settings, skills and assistant integrations. |
+| [Troubleshooting](docs/troubleshooting.md) | Interrupted work, state recovery and diagnostics. |
 
 ## Models
 
@@ -51,10 +64,12 @@ ChakChak watches at runtime that the code and the specs match, checks every fact
 
 **Delete ChakChak and everything stays.** Vanilla OpenSpec in your repository, no formats of its own.
 
-## Install (macOS, Apple silicon)
+## Install (macOS, Apple silicon and Intel)
 
-1. Download `ChakChak-<version>-macos-arm64.zip` from the [latest release](https://github.com/arkuramshin/ccr/releases/latest).
+1. Download your Mac's archive from the [latest release](https://github.com/arkuramshin/ccr/releases/latest): `ChakChak-<version>-macos-arm64.zip` for Apple silicon or `ChakChak-<version>-macos-amd64.zip` for Intel.
 2. Unpack it and drag `ChakChak.app` to Applications.
 3. Open it. The app is signed and notarized by Apple.
 
 ChakChak checks this repository for a new version once a day and offers the update in the app.
+
+See the [installation guide](docs/installation.md) for full instructions and checksum verification.

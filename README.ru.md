@@ -2,6 +2,8 @@
 
 [English](README.md) | Русский
 
+[Скачать](https://github.com/arkuramshin/ccr/releases/latest) · **[Документация](docs/ru/README.md)** · [Руководство пользователя](docs/ru/manual.md)
+
 - Качественная миграция кодовых репозиториев на SDD
 - Real-time синхронизация кода и spec.md
 - Удобный конструктор для schema.yaml
@@ -9,6 +11,17 @@
 - Чистый, строго регулируемый harness
 - ~~Vibecoding~~ Deepcoding
 - WEB MCP CLI режимы работы на выбор
+
+## Документация
+
+Подробные руководства доступны на [русском](docs/ru/README.md) и [английском](docs/README.md).
+
+| Руководство | Содержание |
+| --- | --- |
+| [Установка и обновление](docs/ru/installation.md) | Требования, установка на Mac, терминальная команда и обновления. |
+| [Руководство пользователя](docs/ru/manual.md) | Миграция, спецификации, изменения, задачи, схемы, синхронизация и архив. |
+| [CLI, агенты и MCP](docs/ru/integrations.md) | Команды, настройки провайдеров, навыки и интеграции с ассистентами. |
+| [Решение проблем](docs/ru/troubleshooting.md) | Прерванная работа, восстановление состояния и диагностика. |
 
 ## Модели
 
@@ -51,10 +64,12 @@ ChakChak следит в runtime за соответствием кода и с�
 
 **Удалите ChakChak — всё останется.** Ванильный OpenSpec в вашем репозитории, никаких своих форматов.
 
-## Установка (macOS, Apple silicon)
+## Установка (macOS, Apple silicon и Intel)
 
-1. Скачайте `ChakChak-<version>-macos-arm64.zip` из [последнего релиза](https://github.com/arkuramshin/ccr/releases/latest).
+1. Скачайте архив для своего Mac из [последнего релиза](https://github.com/arkuramshin/ccr/releases/latest): `ChakChak-<version>-macos-arm64.zip` для Apple silicon или `ChakChak-<version>-macos-amd64.zip` для Intel.
 2. Распакуйте архив и перетащите `ChakChak.app` в «Программы».
 3. Откройте приложение. Оно подписано и нотаризовано Apple.
 
 ChakChak раз в день проверяет этот репозиторий на новую версию и предлагает обновиться прямо в приложении.
+
+Подробности и проверка контрольной суммы — в [руководстве по установке](docs/ru/installation.md).
