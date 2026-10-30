@@ -1,0 +1,61 @@
+# ChakChak
+
+> ChakChak is a local app and CLI (macOS; Linux from source) that migrates an existing code repository to spec-driven development: it reads the code, discusses it with a person or an agent, and writes plain OpenSpec specs, one `openspec/specs/<capability>/spec.md` per capability. After the migration it keeps specs in step with the code and runs OpenSpec changes step by step. It uses the coding agent CLI already installed and signed in on the machine (Claude Code, Codex, Gemini CLI, Qwen Code, OpenCode, Cursor CLI, Copilot CLI and others); it holds no credentials of its own.
+
+This repository (`arkuramshin/ccr`) distributes the signed binaries only. Download: https://github.com/arkuramshin/ccr/releases/latest
+
+## Facts for an agent
+
+- Pipeline: map → talk → picture → cut → specs → report.
+  - map: tree-sitter inventory of tracked files and declarations, no build needed (Swift, Objective-C, Java, Kotlin, Python, Go, JavaScript/JSX, TypeScript/TSX).
+  - talk + picture: the model reads the code, asks questions, writes the project description into `openspec/config.yaml`.
+  - cut: every mapped file is placed in exactly one capability; the person reviews the structure.
+  - specs: one fresh model call per capability; the machine accounts every declaration against `Requirement` headings; a separate reader checks Scenarios against code; up to three automatic return rounds.
+  - report: written / open / failed specs, findings, counts.
+- Output is stock OpenSpec. Delete ChakChak and the specs stay usable with stock `openspec`.
+- Durable run state lives in the subject repository under `openspec/chakchak/`; settings in `~/.chakchak/`. Resume picks up where it stopped.
+- Migration calls run the agent in read-only mode. Change and task chats run the agent with full write rights, its own settings, hooks, skills and MCP servers.
+- Spec language is per run: `en` or `ru`.
+- Executable inside the app: `/Applications/ChakChak.app/Contents/MacOS/chakchak`. On first launch the app links `chakchak` into `/usr/local/bin` or `~/.local/bin`.
+
+## Commands
+
+Run from the root of the repository to migrate. A bare `chakchak` is a terminal run; flags need an explicit `cli`, `web` or `mcp`.
+
+- `chakchak cli [agent] [--model name] [--parallel 1-8] [--lang en|ru] [--strict]` — start or resume the migration / sync in the terminal.
+- `chakchak web [agent] [--model name] [--parallel 1-8]` — same run in a local browser page.
+- `chakchak app` — open the repository chooser in the browser.
+- `chakchak mcp [agent] [--model name] [--parallel 1-8]` — MCP server over stdio (see below).
+- `chakchak specs [capability]` — read the spec workspace and sync status, or one full spec; no model call.
+- `chakchak stage <map|talk|picture|cut|specs|report> [capability|--all]` — repeat a stage (the last argument only for `specs`).
+- `chakchak fix <capability-or-number> ["correction"]` — rewrite one saved spec with a correction.
+- `chakchak rule "words"` — add a rule for all future spec writes (stored in OpenSpec config).
+- `chakchak accept <n…>|all`, `chakchak reject <n…>|all` — mark post-run cut proposals.
+- `chakchak apply [<n…>|all]`, `chakchak dismiss <n>` — apply accepted proposals, or dismiss one.
+- `chakchak new-conversation [--confirm]` — archive the checkpoint and start a fresh agent conversation with saved context.
+- `chakchak install` / `doctor` / `uninstall` — install, inspect or remove the ChakChak skill loader in agent CLIs.
+- `chakchak skill` — print the full instruction for an agent driving ChakChak.
+- `chakchak help`, `chakchak version`.
+
+`[agent]` is a provider program name or path, e.g. `codex`, `claude`, `gemini`, `qwen`. Exit codes: 0 done, 1 startup error or failed stage, 2 stopped, 3 with `--strict` when any spec is not written.
+
+Inside the terminal run: `help` lists actions at the current question, `show` repeats it, `auto` toggles accepting defaults; spec writing also takes `stop`, `end`, `fix`, `rule`; cut review takes `move`.
+
+## Driving ChakChak from an agent (MCP)
+
+1. Read the instruction: run `chakchak skill` and read its whole output (or `chakchak install` once to register it as a skill).
+2. Connect a stdio MCP server: executable = absolute path to `chakchak`, args = `mcp` (your session answers the model tasks) or `mcp <agent>` (that agent CLI answers them), working directory = the subject repository. There is no `--cwd` flag and no HTTP endpoint; use a wrapper script that `cd`s and `exec`s if the client cannot set cwd.
+3. Read exact schemas from `tools/list`. Tools:
+   - session: `start {model?}`, `status {wait?, since?}`
+   - decisions: `accept`, `say`, `move`, `fix`, `rule`, `proposal`, `stage`, `stop`, `restart_conversation`
+   - session-model queue: `tasks {wait?, retake?}`, `answer {id, text?, refused?}`
+   - workspace: `specs`
+   - OpenSpec changes: `schema`, `change`, `artifact`, `task`, `examples`
+4. Always read `status` before deciding; decision tools take its `revision` and refuse a stale one.
+5. Record every decision with its reason and code evidence in `chakchak-decisions.md` at the repository root.
+
+## Links
+
+- Releases and install: https://github.com/arkuramshin/ccr/releases
+- Overview: https://github.com/arkuramshin/ccr/blob/main/README.md
+- OpenSpec: https://github.com/Fission-AI/OpenSpec
